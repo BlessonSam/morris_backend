@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from . serializers import teamserializer,articleserializer,courseserializer,testimonialsserializer,blogsserializer,aboutusserializer,queryserializer,videoserializer
+from . serializers import course_serializer,teamserializer,articleserializer,courseserializer,testimonialsserializer,blogsserializer,aboutusserializer,queryserializer,videoserializer
 from . models import article,about_us,testimonials,query,course,videos,blogs,team
 from rest_framework import mixins,generics
 from rest_framework.views import APIView
@@ -37,17 +37,24 @@ class add_query(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModel
     queryset=query.objects.all().order_by('-created_at')
 
     def get(self,request):
+        
         return self.list(request)
 
     def post(self,request):
         return self.create(request)
 
-class list_course(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
-    serializer_class=courseserializer
-    queryset=course.objects.all().order_by('-created_at')
-
+class list_course(APIView):
+    
     def get(self,request):
-        return self.list(request)
+        courses=course.objects.all().order_by('-created_at')
+        serializer=course_serializer(courses,many=True)
+        print(serializer.data,';')
+        details=[]
+        for s in serializer.data :
+            data=[{'num_of_class':s['num_of_class'],'teching_platform':s['teching_platform'],'duration':s['duration']}]
+            s['details']=data
+            
+        return Response(serializer.data)
 
 
 class list_videos(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):

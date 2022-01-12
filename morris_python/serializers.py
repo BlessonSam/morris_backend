@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from . models import query,article,about_us,course,testimonials,videos,blogs,team,social_media
+from . models import query,article,about_us,course,testimonials,videos,blogs,team,social_media,topic
 from drf_writable_nested.serializers import WritableNestedModelSerializer
 
 
@@ -56,4 +56,15 @@ class teamserializer(serializers.ModelSerializer):
     twitter=social_mediaserializer()
     class Meta :
         model=team 
+        fields='__all__'
+
+class topicserializer(serializers.ModelSerializer):
+    class Meta :
+        model=topic
+        fields='__all__'
+
+class course_serializer(WritableNestedModelSerializer):
+    topics=topicserializer(many=True)
+    class Meta :
+        model=course
         fields='__all__'

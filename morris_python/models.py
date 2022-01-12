@@ -77,16 +77,29 @@ class videos(models.Model):
     
     class Meta:
         verbose_name_plural = 'Videos'
+
+class topic(models.Model):
+    title= models.CharField(max_length=1024)
+
+    def __str__(self):
+        return self.title 
+    
+    class Meta:
+        verbose_name_plural = 'Topics'
 class course(models.Model):
     title =models.CharField(max_length=1024)
     subtitle =models.CharField(max_length=1024)
-    content =models.CharField(max_length=1024)
-    section=models.TextField()
+    content =models.CharField(max_length=1024,null=True)
+    section=models.TextField(null=True)
     created_at=models.DateField(auto_now_add=True)
-    objective=models.CharField(max_length=1024)
-    topics=models.CharField(max_length=1024)
-    methodology=models.CharField(max_length=1024)
-    aim=models.CharField(max_length=1024)
+    objective=models.CharField(max_length=1024,null=True)
+    methodology=models.CharField(max_length=1024,null=True)
+    aim=models.CharField(max_length=1024,null=True)
+    topics=models.ManyToManyField(topic,null=True)
+    rythm_of_english=models.CharField(max_length=1024,null=True)
+    teching_platform=models.CharField(max_length=1024,null=True)
+    duration=models.CharField(max_length=1024,null=True)
+    num_of_class=models.IntegerField(null=True)
 
     def __str__(self):
         return self.title

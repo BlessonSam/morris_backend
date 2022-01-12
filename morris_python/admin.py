@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from . models import article,about_us,testimonials,query,course,videos,blogs,social_media,team
+from . models import article,about_us,testimonials,query,course,videos,blogs,social_media,team,topic
 
 class teamadmin(admin.ModelAdmin):
     list_display =['title','name','description']
@@ -32,6 +32,7 @@ class courseadmin(admin.ModelAdmin):
 class blogsadmin(admin.ModelAdmin):
     list_display =['title','description','written_by']
     list_filter = ['written_by',]
+    
 admin.site.register(article,articleadmin)
 admin.site.register(about_us)
 admin.site.register(testimonials,testimonialsadmin)
@@ -41,4 +42,4 @@ admin.site.register(course,courseadmin)
 admin.site.register(blogs,blogsadmin)
 admin.site.register(team,teamadmin)
 admin.site.register(social_media,social_media_admin)
-
+admin.site.register(topic)
