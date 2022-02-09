@@ -27,14 +27,19 @@ class team(models.Model):
     
 
 class about_us(models.Model):
-    content=models.CharField(max_length=1024)
-    first_address=models.CharField(max_length=1024)
-    second_address=models.CharField(max_length=1024)
+    title=models.CharField(max_length=1024)
+    first_line=models.CharField(max_length=1024)
+    second_line=models.CharField(max_length=1024)
+    third_line=models.CharField(max_length=1024, blank=True)
+    fourth_line=models.CharField(max_length=1024, blank=True)
+    fifth_line=models.CharField(max_length=1024, blank=True)
     email=models.EmailField(max_length=254)
-    phno=models.CharField(max_length=10,help_text="Enter Contact Number")
+    contact1=models.CharField(max_length=10,help_text="Enter Contact Number")
+    contact2=models.CharField(max_length=10,help_text="Enter Contact Number", blank=True)
+
     created_at=models.DateField(auto_now_add=True)
     def __str__(self):
-        return self.content 
+        return self.title 
     
     class Meta:
         verbose_name_plural = 'About Us'
