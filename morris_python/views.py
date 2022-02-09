@@ -7,12 +7,23 @@ from rest_framework import mixins,generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-class list_article(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
+class list_article(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin,mixins.RetrieveModelMixin):
     serializer_class=articleserializer
     queryset=article.objects.all().order_by('-created_at')
+    lookup_field='id'
 
-    def get(self,request):
-        return self.list(request)
+    def get(self,request,id=None):
+        if id :
+            data= self.retrieve(request,id)
+            print(data.data)
+            data.data['section']=[data.data['section']]
+            # print(data['section'])
+            return Response(data.data)
+        else :
+            article_list=self.list(request)
+            for a in article_list.data :
+                a['section']=[a['section']]
+            return Response(article_list.data)
 
 
 class list_about_us(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
@@ -49,8 +60,11 @@ class list_course(APIView):
         courses=course.objects.all().order_by('-created_at')
         serializer=course_serializer(courses,many=True)
         print(serializer.data,';')
-        details=[]
+        section=[]
         for s in serializer.data :
+            section.append(s['section'])
+            s['section']=section
+
             data=[{'num_of_class':s['num_of_class'],'teching_platform':s['teching_platform'],'duration':s['duration']}]
             s['details']=data
             
@@ -83,3 +97,24 @@ class list_teams(generics.GenericAPIView,APIView,mixins.CreateModelMixin,mixins.
 
          
         return Response (serializer.data)
+
+
+
+class list_course_id(APIView):
+    
+    def get(self,request,id):
+        courses=course.objects.get(id=id)
+        serializer=course_serializer(courses)
+        # print(serializer.data,';')
+        section=[]
+       
+        section.append(serializer.data['section'])
+        serializer.data['section']=section
+
+        data=[{'num_of_class':serializer.data['num_of_class'],'teching_platform':serializer.data['teching_platform'],'duration':serializer.data['duration']}]
+        serializer.data['details']=data
+            
+        return Response(serializer.data)
+
+
+

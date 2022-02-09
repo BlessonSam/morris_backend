@@ -15,12 +15,12 @@ class team(models.Model):
     name=models.CharField(max_length=1024)
     title=models.CharField(max_length=1024)
     description=models.CharField(max_length=1024)
-    fb=models.ForeignKey(social_media,related_name="Facebook",verbose_name="Facebook",on_delete=models.CASCADE,null=True)
-    fb_link=models.URLField(max_length=1000,null=True)
-    linkdin_link=models.URLField(max_length=1000,null=True)
-    twitt_link=models.URLField(max_length=1000,null=True)
-    linkdin=models.ForeignKey(social_media,related_name="Linkdin",verbose_name="Linkdin",on_delete=models.CASCADE,null=True)
-    twitter=models.ForeignKey(social_media,related_name='Twitter',verbose_name="Twitter", on_delete=models.CASCADE,null=True)
+    # fb=models.ForeignKey(social_media,related_name="Facebook",verbose_name="Facebook",on_delete=models.CASCADE,null=True)
+    # fb_link=models.URLField(max_length=1000,null=True)
+    # linkdin_link=models.URLField(max_length=1000,null=True)
+    # twitt_link=models.URLField(max_length=1000,null=True)
+    # linkdin=models.ForeignKey(social_media,related_name="Linkdin",verbose_name="Linkdin",on_delete=models.CASCADE,null=True)
+    # twitter=models.ForeignKey(social_media,related_name='Twitter',verbose_name="Twitter", on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return self.name
@@ -113,12 +113,13 @@ class course(models.Model):
         verbose_name_plural = 'Course'
 
 class article(models.Model):
-    images=models.ImageField(upload_to='artimages/')
+  
     title=models.CharField(max_length=50)
     subtitle =models.CharField(max_length=1024)
     created_at=models.DateField(auto_now_add=True)
     section=models.TextField()
     written_by=models.CharField(max_length=1024)
+    written_on=models.DateField(auto_now_add=False)
 
     def __str__(self):
         return self.subtitle
