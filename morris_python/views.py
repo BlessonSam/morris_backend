@@ -105,16 +105,18 @@ class list_course_id(APIView):
     def get(self,request,id):
         courses=course.objects.get(id=id)
         serializer=course_serializer(courses)
-        # print(serializer.data,';')
+        print(serializer.data['num_of_class'],';')
+        
         section=[]
-       
-        section.append(serializer.data['section'])
-        serializer.data['section']=section
+        dd=serializer.data
+        section.append(dd['section'])
+        dd['section']=section
 
-        data=[{'num_of_class':serializer.data['num_of_class'],'teching_platform':serializer.data['teching_platform'],'duration':serializer.data['duration']}]
-        serializer.data['details']=data
+        data=[{'num_of_class':dd['num_of_class'],'teching_platform':dd['teching_platform'],'duration':dd['duration']}]
+        dd['details']=data
+        print(dd['details'])
             
-        return Response(serializer.data)
+        return Response(dd)
 
 
 
