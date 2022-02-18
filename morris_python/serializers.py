@@ -51,9 +51,9 @@ class courseserializer(serializers.ModelSerializer):
         fields='__all__'
 
 class teamserializer(serializers.ModelSerializer):
-    fb=social_mediaserializer()
-    linkdin=social_mediaserializer()
-    twitter=social_mediaserializer()
+    # fb=social_mediaserializer()
+    # linkdin=social_mediaserializer()
+    # twitter=social_mediaserializer()
     class Meta :
         model=team 
         fields='__all__'
