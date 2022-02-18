@@ -4,7 +4,7 @@ from django.contrib import admin
 from . models import article,about_us,testimonials,query,course,videos,blogs,social_media,team,topic
 
 class teamadmin(admin.ModelAdmin):
-    list_display =['title','name','description']
+    list_display =['title','name','description','pic']
     list_filter = ['name']
 
 class social_media_admin(admin.ModelAdmin):

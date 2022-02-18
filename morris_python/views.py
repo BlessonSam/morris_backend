@@ -90,13 +90,11 @@ class list_teams(generics.GenericAPIView,APIView,mixins.CreateModelMixin,mixins.
     queryset=team.objects.all()
 
     def get(self,request):
-        social_list=[]
-        team_data=team.objects.all()
-        serializer=teamserializer(team_data,many=True)
-        print(serializer.data,'lllll')
-
-         
-        return Response (serializer.data)
+        # social_list=[]
+        # team_data=team.objects.all()
+        # serializer=teamserializer(team_data,many=True)
+        # print(serializer.data,'lllll')
+        return self.list(request)
 
 
 

@@ -95,7 +95,7 @@ class course(models.Model):
     title =models.CharField(max_length=1024)
     subtitle =models.CharField(max_length=1024)
     content =models.CharField(max_length=1024,null=True)
-    section=models.TextField(null=True)
+    intro=models.CharField(max_length=1024,null=True)
     created_at=models.DateField(auto_now_add=True)
     objective=models.CharField(max_length=1024,null=True)
     methodology=models.CharField(max_length=1024,null=True)
