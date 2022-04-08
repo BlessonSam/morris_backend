@@ -1,14 +1,14 @@
 from django.contrib import admin
 
 # Register your models here.
-from . models import article,about_us,testimonials,query,course,videos,blogs,social_media,team,topic
+from . models import article,testimonials,query,course,videos,team
 
 class teamadmin(admin.ModelAdmin):
     list_display =['title','name','description','pic']
     list_filter = ['name']
 
-class social_media_admin(admin.ModelAdmin):
-    pass
+# class social_media_admin(admin.ModelAdmin):
+#     pass
 
 class articleadmin(admin.ModelAdmin):
     list_display =['title','written_by','subtitle']
@@ -25,21 +25,21 @@ class videosadmin(admin.ModelAdmin):
     list_display =['url','title','thumbnail']
 
 class courseadmin(admin.ModelAdmin):
-    list_display =['title','subtitle','content','created_at']
+    list_display =['title','subtitle','created_at']
    
 
 
-class blogsadmin(admin.ModelAdmin):
-    list_display =['title','description','written_by']
-    list_filter = ['written_by',]
+# class blogsadmin(admin.ModelAdmin):
+#     list_display =['title','description','written_by']
+#     list_filter = ['written_by',]
     
 admin.site.register(article,articleadmin)
-admin.site.register(about_us)
+# admin.site.register(about_us)
 admin.site.register(testimonials,testimonialsadmin)
 admin.site.register(query,queryadmin)
 admin.site.register(videos,videosadmin)
 admin.site.register(course,courseadmin)
-admin.site.register(blogs,blogsadmin)
+# admin.site.register(blogs,blogsadmin)
 admin.site.register(team,teamadmin)
-admin.site.register(social_media,social_media_admin)
-admin.site.register(topic)
+# admin.site.register(social_media,social_media_admin)
+# admin.site.register(topic)

@@ -2,12 +2,12 @@ from django.db import models
 from phone_field import PhoneField
 # Create your models here.
 
-class social_media(models.Model):
-    name=models.CharField(max_length=1054)
-    pic=models.ImageField(upload_to='icons/')
+# class social_media(models.Model):
+#     name=models.CharField(max_length=1054)
+#     pic=models.ImageField(upload_to='icons/')
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
     
 class team(models.Model):
@@ -83,25 +83,25 @@ class videos(models.Model):
     class Meta:
         verbose_name_plural = 'Videos'
 
-class topic(models.Model):
-    title= models.CharField(max_length=1024)
+# class topic(models.Model):
+#     title= models.CharField(max_length=1024)
 
-    def __str__(self):
-        return self.title 
+#     def __str__(self):
+#         return self.title 
     
-    class Meta:
-        verbose_name_plural = 'Topics'
+#     class Meta:
+#         verbose_name_plural = 'Topics'
 class course(models.Model):
     title =models.CharField(max_length=1024)
     subtitle =models.CharField(max_length=1024)
-    content =models.CharField(max_length=1024,null=True)
-    intro=models.CharField(max_length=1024,null=True)
+    # content =models.CharField(max_length=1024,null=True)
+    intro=models.TextField(null=True)
     created_at=models.DateField(auto_now_add=True)
-    objective=models.CharField(max_length=1024,null=True)
-    methodology=models.CharField(max_length=1024,null=True)
-    aim=models.CharField(max_length=1024,null=True)
-    topics=models.ManyToManyField(topic,null=True)
-    rythm_of_english=models.CharField(max_length=1024,null=True)
+    objective=models.TextField(null=True)
+    methodology=models.TextField(null=True)
+    aim=models.TextField(null=True)
+    topics=models.TextField(null=True)
+    rythm_of_english=models.TextField(null=True)
     teching_platform=models.CharField(max_length=1024,null=True)
     duration=models.CharField(max_length=1024,null=True)
     num_of_class=models.IntegerField(null=True)
@@ -129,15 +129,15 @@ class article(models.Model):
 
 
     
-class blogs(models.Model):
-    title=models.CharField(max_length=1024)
-    description=models.TextField()
-    written_by=models.CharField(max_length=1024)
-    created_at=models.DateField(auto_now=True)
+# class blogs(models.Model):
+#     title=models.CharField(max_length=1024)
+#     description=models.TextField()
+#     written_by=models.CharField(max_length=1024)
+#     created_at=models.DateField(auto_now=True)
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title
     
-    class Meta:
-        verbose_name_plural = 'Blogs'
+#     class Meta:
+#         verbose_name_plural = 'Blogs'
     

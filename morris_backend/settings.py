@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'morris_python',
-    'django_cleanup.apps.CleanupConfig',
     'rest_framework',
     'corsheaders',
+    'django_cleanup.apps.CleanupConfig',
    
 ]
 
