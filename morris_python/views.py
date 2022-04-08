@@ -1,26 +1,37 @@
 from django.shortcuts import render
 
 # Create your views here.
-from . serializers import teamserializer,articleserializer,courseserializer,testimonialsserializer,blogsserializer,aboutusserializer,queryserializer,videoserializer
-from . models import article,about_us,testimonials,query,course,videos,blogs,team
+from . serializers import course_serializer,teamserializer,articleserializer,testimonialsserializer,queryserializer,videoserializer
+from . models import article,testimonials,query,course,videos,team
 from rest_framework import mixins,generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-class list_article(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
+class list_article(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin,mixins.RetrieveModelMixin):
     serializer_class=articleserializer
     queryset=article.objects.all().order_by('-created_at')
+    lookup_field='id'
 
-    def get(self,request):
-        return self.list(request)
+    def get(self,request,id=None):
+        if id :
+            data= self.retrieve(request,id)
+            print(data.data)
+            data.data['section']=[data.data['section']]
+            # print(data['section'])
+            return Response(data.data)
+        else :
+            article_list=self.list(request)
+            for a in article_list.data :
+                a['section']=[a['section']]
+            return Response(article_list.data)
 
 
-class list_about_us(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
-    serializer_class=aboutusserializer
-    queryset=about_us.objects.all().order_by('-created_at')
+# class list_about_us(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
+#     serializer_class=aboutusserializer
+#     queryset=about_us.objects.all().order_by('-created_at')
 
-    def get(self,request):
-        return self.list(request)
+#     def get(self,request):
+#         return self.list(request)
 
 
 class list_testimonials(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
@@ -37,17 +48,27 @@ class add_query(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModel
     queryset=query.objects.all().order_by('-created_at')
 
     def get(self,request):
+        
         return self.list(request)
 
     def post(self,request):
         return self.create(request)
 
-class list_course(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
-    serializer_class=courseserializer
-    queryset=course.objects.all().order_by('-created_at')
-
+class list_course(APIView):
+    
     def get(self,request):
-        return self.list(request)
+        courses=course.objects.all().order_by('-created_at')
+        serializer=course_serializer(courses,many=True)
+        print(serializer.data,';')
+        # section=[]
+        for s in serializer.data :
+            # section.append(s['section'])
+            # s['section']=section
+
+            data=[{'num_of_class':s['num_of_class'],'teching_platform':s['teching_platform'],'duration':s['duration']}]
+            s['details']=data
+            
+        return Response(serializer.data)
 
 
 class list_videos(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
@@ -57,22 +78,43 @@ class list_videos(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListMod
     def get(self,request):
         return self.list(request)
 
-class list_blogs(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
-    serializer_class=blogsserializer
-    queryset=blogs.objects.all().order_by('-created_at')
+# class list_blogs(generics.GenericAPIView,mixins.CreateModelMixin,mixins.ListModelMixin):
+#     serializer_class=blogsserializer
+#     queryset=blogs.objects.all().order_by('-created_at')
 
-    def get(self,request):
-        return self.list(request)
+#     def get(self,request):
+#         return self.list(request)
 
 class list_teams(generics.GenericAPIView,APIView,mixins.CreateModelMixin,mixins.ListModelMixin):
     serializer_class=teamserializer
     queryset=team.objects.all()
 
     def get(self,request):
-        social_list=[]
-        team_data=team.objects.all()
-        serializer=teamserializer(team_data,many=True)
-        print(serializer.data,'lllll')
+        # social_list=[]
+        # team_data=team.objects.all()
+        # serializer=teamserializer(team_data,many=True)
+        # print(serializer.data,'lllll')
+        return self.list(request)
 
-         
-        return Response (serializer.data)
+
+
+class list_course_id(APIView):
+    
+    def get(self,request,id):
+        courses=course.objects.get(id=id)
+        serializer=course_serializer(courses)
+        print(serializer.data['num_of_class'],';')
+        
+        section=[]
+        dd=serializer.data
+        # section.append(dd['section'])
+        # dd['section']=section
+
+        data=[{'num_of_class':dd['num_of_class'],'teching_platform':dd['teching_platform'],'duration':dd['duration']}]
+        dd['details']=data
+        print(dd['details'])
+            
+        return Response(dd)
+
+
+
