@@ -20,8 +20,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', admin.site.urls),
+    
     path('',include('morris_python.urls'))
+    path('', admin.site.urls),
 ]
 admin.site.site_header  =  "Administration"  
 admin.site.site_title  =  "Moris"
